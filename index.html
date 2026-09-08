@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auramotion — Design, branding e identidade de marca</title>
+<meta name="description" content="Auramotion cria identidade visual, estratégia de marca e design publicitário para negócios locais e grandes marcas.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#121214',
+          inksoft: '#1B1B1F',
+          inkline: '#2C2C31',
+          paper: '#F2F0EB',
+          papersoft: '#E9E6DE',
+          brass: '#B4915B',
+          brassdim: '#8E7247',
+          plum: '#4B3F72',
+        },
+        fontFamily: {
+          display: ['"Bricolage Grotesque"', 'sans-serif'],
+          body: ['"Manrope"', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+<style>
+  :root { --brass: #B4915B; }
+  * { scroll-behavior: smooth; }
+  html, body { background: #121214; }
+  body { font-family: 'Manrope', sans-serif; cursor: default; }
+  h1, h2, h3, h4, .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
+
+  ::selection { background: #B4915B; color: #121214; }
+
+  /* Reveal-on-scroll base state */
+  .reveal { opacity: 0; transform: translateY(28px); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); transition: opacity 0.9s cubic-bezier(.16,.84,.44,1), transform 0.9s cubic-bezier(.16,.84,.44,1); }
+
+  /* Custom cursor (desktop only) */
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 200;
+    border-radius: 50%; transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+  .cursor-dot { width: 6px; height: 6px; background: #B4915B; }
+  .cursor-ring { width: 34px; height: 34px; border: 1px solid rgba(180,145,91,0.55); transition: width .25s ease, height .25s ease, border-color .25s ease, opacity .25s ease; }
+  .cursor-ring.is-active { width: 56px; height: 56px; border-color: rgba(180,145,91,0.9); }
+  @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+  /* Magnetic CTA */
+  .magnetic { display: inline-flex; will-change: transform; }
+
+  /* Divider hairline */
+  .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(180,145,91,0.35), transparent); }
+
+  /* Service row underline grow */
+  .service-row { position: relative; }
+  .service-row::after {
+    content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 0%;
+    background: #B4915B; transition: width .6s cubic-bezier(.16,.84,.44,1);
+  }
+  .service-row:hover::after { width: 100%; }
+
+  /* Portfolio card image scale */
+  .work-media { overflow: hidden; }
+  .work-media img, .work-media .media-fill { transition: transform 1.1s cubic-bezier(.16,.84,.44,1); }
+  .work-card:hover .media-fill { transform: scale(1.06); }
+
+  /* Nav link underline */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0%;
+    background: currentColor; transition: width .35s cubic-bezier(.16,.84,.44,1);
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  textarea, input { background: transparent; }
+  input:focus, textarea:focus { outline: none; }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #121214; }
+  ::-webkit-scrollbar-thumb { background: #2C2C31; border-radius: 999px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { scroll-behavior: auto; }
+  }
+</style>
+</head>
+
+<body class="bg-ink text-paper antialiased">
+
+<!-- Custom cursor -->
+<div class="cursor-dot hidden md:block"></div>
+<div class="cursor-ring hidden md:block"></div>
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-6 flex items-center justify-between">
+    <a href="#topo" class="font-display text-xl tracking-tight text-paper" data-cursor-active>
+      Aura<span class="text-brass">motion</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-10 text-sm text-paper/80">
+      <a href="#servicos" class="nav-link" data-cursor-active>Serviços</a>
+      <a href="#manifesto" class="nav-link" data-cursor-active>Manifesto</a>
+      <a href="#trabalho" class="nav-link" data-cursor-active>Trabalho</a>
+      <a href="#contato" class="nav-link text-paper" data-cursor-active>Contato</a>
+    </nav>
+    <a href="#contato" class="md:hidden text-sm border border-paper/30 rounded-full px-4 py-2" data-cursor-active>Contato</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="topo" class="relative min-h-[100svh] flex items-center overflow-hidden bg-ink">
+  <canvas id="aura-canvas" class="absolute inset-0 w-full h-full opacity-70 mix-blend-screen"></canvas>
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink pointer-events-none"></div>
+
+  <div class="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-28 pb-20 w-full">
+    <div class="max-w-3xl">
+      <p class="text-brass/90 text-sm tracking-wide mb-8 reveal">Design, branding e estratégia de marca</p>
+      <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper reveal">
+        Transformamos identidade em valor.
+      </h1>
+      <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper/50 mt-1 reveal">
+        Criamos marcas que movem mercados.
+      </h1>
+      <p class="mt-8 text-lg text-paper/70 max-w-xl reveal">
+        Da barbearia de bairro à operação de grande porte, construímos identidades visuais e
+        posicionamentos que dão presença, credibilidade e resultado comercial.
+      </p>
+
+      <div class="mt-12 flex flex-wrap items-center gap-6 reveal">
+        <a href="#contato" class="magnetic group relative rounded-full bg-paper text-ink px-8 py-4 text-sm font-medium overflow-hidden" data-cursor-active>
+          <span class="relative z-10">Iniciar um projeto</span>
+        </a>
+        <a href="#trabalho" class="text-sm text-paper/70 hover:text-paper transition-colors" data-cursor-active>Ver trabalho realizado</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-6 md:left-10 text-paper/40 text-xs tracking-wide hidden sm:block">
+    Role para explorar
+  </div>
+</section>
+
+<!-- ============ MANIFESTO STRIP ============ -->
+<section id="manifesto" class="bg-paper text-ink py-28 md:py-36">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="grid md:grid-cols-12 gap-10 md:gap-6">
+      <div class="md:col-span-4 reveal">
+        <p class="text-brassdim text-sm tracking-wide">Nosso manifesto</p>
+      </div>
+      <div class="md:col-span-8 reveal">
+        <p class="font-display text-3xl md:text-[2.6rem] leading-[1.15] tracking-tight max-w-3xl">
+          Uma marca pequena não deveria valer menos. Atendemos a barbearia da esquina com o
+          mesmo rigor estratégico aplicado a operações de grande porte — porque identidade
+          forte não é privilégio de escala, é decisão de quem lidera.
+        </p>
+        <p class="mt-8 text-ink/60 max-w-xl leading-relaxed">
+          "Aura" é a atmosfera que uma marca projeta antes mesmo de falar. "Motion" é o
+          movimento que a mantém relevante enquanto o mercado muda. A Auramotion existe no
+          encontro dessas duas forças: presença e evolução, design e negócio.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVIÇOS ============ -->
+<section id="servicos" class="bg-ink py-28 md:py-36">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between mb-16 reveal">
+      <h2 class="font-display text-4xl md:text-5xl tracking-tight">O que fazemos</h2>
+      <p class="hidden md:block text-paper/50 max-w-xs text-right">Três frentes, uma mesma disciplina de marca.</p>
+    </div>
+
+    <div class="border-t border-inkline">
+      <div class="service-row reveal group border-b border-inkline py-10 md:py-12 grid md:grid-cols-12 gap-4 md:gap-6 items-baseline cursor-pointer" data-cursor-active>
+        <h3 class="md:col-span-5 font-display text-2xl md:text-3xl text-paper group-hover:text-brass transition-colors">Identidade Visual &amp; Branding</h3>
+        <p class="md:col-span-6 text-paper/60 leading-relaxed">Logotipos, sistemas visuais completos e universos de marca consistentes — a base que sustenta o crescimento de qualquer negócio.</p>
+        <span class="md:col-span-1 md:text-right text-paper/30 font-display text-sm">01</span>
+      </div>
+
+      <div class="service-row reveal group border-b border-inkline py-10 md:py-12 grid md:grid-cols-12 gap-4 md:gap-6 items-baseline cursor-pointer" data-cursor-active>
+        <h3 class="md:col-span-5 font-display text-2xl md:text-3xl text-paper group-hover:text-brass transition-colors">Estratégia de Marca</h3>
+        <p class="md:col-span-6 text-paper/60 leading-relaxed">Posicionamento, arquitetura de marca e direção estratégica que orientam decisões reais de negócio, não apenas peças gráficas.</p>
+        <span class="md:col-span-1 md:text-right text-paper/30 font-display text-sm">02</span>
+      </div>
+
+      <div class="service-row reveal group border-b border-inkline py-10 md:py-12 grid md:grid-cols-12 gap-4 md:gap-6 items-baseline cursor-pointer" data-cursor-active>
+        <h3 class="md:col-span-5 font-display text-2xl md:text-3xl text-paper group-hover:text-brass transition-colors">Design Publicitário</h3>
+        <p class="md:col-span-6 text-paper/60 leading-relaxed">Banners, pôsteres e materiais gráficos e digitais pensados para converter presença de marca em resultado mensurável.</p>
+        <span class="md:col-span-1 md:text-right text-paper/30 font-display text-sm">03</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUEM SOMOS ============ -->
+<section class="bg-paper text-ink py-28 md:py-36">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="grid md:grid-cols-12 gap-10 md:gap-16 items-center">
+      <div class="md:col-span-5 reveal order-2 md:order-1">
+        <div class="aspect-[4/5] rounded-2xl relative overflow-hidden" style="background: radial-gradient(120% 120% at 20% 15%, #4B3F72 0%, #121214 55%, #121214 100%);">
+          <div class="absolute inset-0" style="background: radial-gradient(60% 60% at 75% 80%, rgba(180,145,91,0.55), transparent 70%);"></div>
+        </div>
+      </div>
+      <div class="md:col-span-7 order-1 md:order-2 reveal">
+        <p class="text-brassdim text-sm tracking-wide mb-6">Quem somos</p>
+        <h2 class="font-display text-3xl md:text-4xl tracking-tight leading-tight mb-8">
+          Uma agência que fala tanto com o pequeno comércio quanto com o gestor de marketing.
+        </h2>
+        <div class="space-y-5 text-ink/70 leading-relaxed max-w-xl">
+          <p>A Auramotion nasceu para ocupar um espaço pouco explorado: o de uma agência com
+          padrão estético de consultoria global, mas acessível a quem está começando um
+          negócio local.</p>
+          <p>Cada projeto recebe o mesmo processo — pesquisa, posicionamento, identidade e
+          aplicação — adaptado à escala e à ambição de quem contrata. O resultado é sempre o
+          mesmo: uma marca com presença, coerência e valor percebido.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PORTFÓLIO ============ -->
+<section id="trabalho" class="bg-ink py-28 md:py-36">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between mb-16 reveal">
+      <h2 class="font-display text-4xl md:text-5xl tracking-tight">Casos de sucesso</h2>
+      <p class="hidden md:block text-paper/50 max-w-xs text-right">De negócios locais a operações nacionais.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+
+      <a href="#" class="work-card reveal group block" data-cursor-active>
+        <div class="work-media aspect-[4/3] rounded-2xl relative">
+          <div class="media-fill absolute inset-0 rounded-2xl" style="background: linear-gradient(135deg, #2C2C31 0%, #121214 100%);"></div>
+          <div class="media-fill absolute inset-0 rounded-2xl opacity-80" style="background: radial-gradient(45% 45% at 30% 30%, rgba(180,145,91,0.5), transparent 70%);"></div>
+        </div>
+        <div class="mt-5 flex items-baseline justify-between">
+          <h3 class="font-display text-xl text-paper">Talhos Barbearia</h3>
+          <span class="text-paper/40 text-sm">Comércio local</span>
+        </div>
+        <p class="text-paper/50 text-sm mt-1">Identidade visual e sinalização de loja</p>
+      </a>
+
+      <a href="#" class="work-card reveal group block" data-cursor-active>
+        <div class="work-media aspect-[4/3] rounded-2xl relative">
+          <div class="media-fill absolute inset-0 rounded-2xl" style="background: linear-gradient(135deg, #1B1B1F 0%, #121214 100%);"></div>
+          <div class="media-fill absolute inset-0 rounded-2xl opacity-80" style="background: radial-gradient(45% 45% at 70% 25%, rgba(75,63,114,0.6), transparent 70%);"></div>
+        </div>
+        <div class="mt-5 flex items-baseline justify-between">
+          <h3 class="font-display text-xl text-paper">Verity Corp</h3>
+          <span class="text-paper/40 text-sm">Grande empresa</span>
+        </div>
+        <p class="text-paper/50 text-sm mt-1">Reposicionamento e arquitetura de marca</p>
+      </a>
+
+      <a href="#" class="work-card reveal group block" data-cursor-active>
+        <div class="work-media aspect-[4/3] rounded-2xl relative">
+          <div class="media-fill absolute inset-0 rounded-2xl" style="background: linear-gradient(135deg, #2C2C31 0%, #121214 100%);"></div>
+          <div class="media-fill absolute inset-0 rounded-2xl opacity-80" style="background: radial-gradient(45% 45% at 25% 70%, rgba(180,145,91,0.45), transparent 70%);"></div>
+        </div>
+        <div class="mt-5 flex items-baseline justify-between">
+          <h3 class="font-display text-xl text-paper">Nômade Calçados</h3>
+          <span class="text-paper/40 text-sm">Comércio local</span>
+        </div>
+        <p class="text-paper/50 text-sm mt-1">Naming, logotipo e materiais de ponto de venda</p>
+      </a>
+
+      <a href="#" class="work-card reveal group block" data-cursor-active>
+        <div class="work-media aspect-[4/3] rounded-2xl relative">
+          <div class="media-fill absolute inset-0 rounded-2xl" style="background: linear-gradient(135deg, #1B1B1F 0%, #121214 100%);"></div>
+          <div class="media-fill absolute inset-0 rounded-2xl opacity-80" style="background: radial-gradient(45% 45% at 65% 65%, rgba(75,63,114,0.55), transparent 70%);"></div>
+        </div>
+        <div class="mt-5 flex items-baseline justify-between">
+          <h3 class="font-display text-xl text-paper">Cerrado Alimentos</h3>
+          <span class="text-paper/40 text-sm">Grande empresa</span>
+        </div>
+        <p class="text-paper/50 text-sm mt-1">Sistema de embalagens e campanha institucional</p>
+      </a>
+
+    </div>
+
+    <div class="mt-16 reveal">
+      <a href="#contato" class="inline-flex items-center gap-3 text-paper border-b border-paper/30 hover:border-brass hover:text-brass pb-1 transition-colors" data-cursor-active>
+        Quero um projeto assim
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / CONTATO ============ -->
+<section id="contato" class="bg-paper text-ink py-28 md:py-36">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="grid md:grid-cols-12 gap-10 md:gap-16">
+
+      <div class="md:col-span-5 reveal">
+        <h2 class="font-display text-4xl md:text-5xl tracking-tight leading-[1.05]">
+          Vamos construir o seu próximo movimento?
+        </h2>
+        <p class="mt-6 text-ink/60 leading-relaxed max-w-sm">
+          Conte um pouco sobre o seu negócio e o momento atual da sua marca.
+          Respondemos em até um dia útil.
+        </p>
+
+        <div class="mt-12 space-y-3 text-sm">
+          <a href="mailto:ola@auramotion.com.br" class="block text-ink hover:text-brassdim transition-colors" data-cursor-active>ola@auramotion.com.br</a>
+          <a href="#" class="block text-ink/60 hover:text-brassdim transition-colors" data-cursor-active>+55 (51) 99999-0000</a>
+          <a href="#" class="block text-ink/60 hover:text-brassdim transition-colors" data-cursor-active>@auramotion</a>
+        </div>
+      </div>
+
+      <div class="md:col-span-7 reveal">
+        <form class="space-y-8">
+          <div class="grid sm:grid-cols-2 gap-8">
+            <div class="border-b border-ink/20 pb-3 focus-within:border-ink transition-colors">
+              <label for="nome" class="block text-xs text-ink/50 mb-2">Nome</label>
+              <input id="nome" type="text" required class="w-full text-ink placeholder:text-ink/30" placeholder="Seu nome">
+            </div>
+            <div class="border-b border-ink/20 pb-3 focus-within:border-ink transition-colors">
+              <label for="email" class="block text-xs text-ink/50 mb-2">E-mail</label>
+              <input id="email" type="email" required class="w-full text-ink placeholder:text-ink/30" placeholder="voce@empresa.com">
+            </div>
+          </div>
+
+          <div class="border-b border-ink/20 pb-3 focus-within:border-ink transition-colors">
+            <label for="tipo" class="block text-xs text-ink/50 mb-2">Tipo de projeto</label>
+            <select id="tipo" class="w-full text-ink bg-transparent">
+              <option>Identidade visual & branding</option>
+              <option>Estratégia de marca</option>
+              <option>Design publicitário</option>
+              <option>Ainda não sei</option>
+            </select>
+          </div>
+
+          <div class="border-b border-ink/20 pb-3 focus-within:border-ink transition-colors">
+            <label for="mensagem" class="block text-xs text-ink/50 mb-2">Mensagem</label>
+            <textarea id="mensagem" rows="3" class="w-full text-ink placeholder:text-ink/30 resize-none" placeholder="Conte um pouco sobre o momento da sua marca"></textarea>
+          </div>
+
+          <button type="submit" class="magnetic inline-flex items-center rounded-full bg-ink text-paper px-8 py-4 text-sm font-medium" data-cursor-active>
+            Enviar mensagem
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-ink py-14 border-t border-inkline">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <a href="#topo" class="font-display text-lg text-paper" data-cursor-active>Aura<span class="text-brass">motion</span></a>
+    <nav class="flex flex-wrap gap-x-8 gap-y-2 text-sm text-paper/50">
+      <a href="#servicos" class="hover:text-paper transition-colors" data-cursor-active>Serviços</a>
+      <a href="#manifesto" class="hover:text-paper transition-colors" data-cursor-active>Manifesto</a>
+      <a href="#trabalho" class="hover:text-paper transition-colors" data-cursor-active>Trabalho</a>
+      <a href="#contato" class="hover:text-paper transition-colors" data-cursor-active>Contato</a>
+    </nav>
+    <p class="text-paper/30 text-xs">© 2026 Auramotion. Identidade que move mercados.</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- Scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach((el) => io.observe(el));
+
+  // ---------- Custom cursor ----------
+  const isTouch = window.matchMedia('(hover: none)').matches;
+  if (!isTouch) {
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    let ringX = mouseX, ringY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.16;
+      ringY += (mouseY - ringY) * 0.16;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('[data-cursor-active]').forEach((el) => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-active'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-active'));
+    });
+  }
+
+  // ---------- Magnetic buttons ----------
+  document.querySelectorAll('.magnetic').forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const relX = e.clientX - rect.left - rect.width / 2;
+      const relY = e.clientY - rect.top - rect.height / 2;
+      if (window.gsap) {
+        gsap.to(btn, { x: relX * 0.35, y: relY * 0.5, duration: 0.4, ease: 'power3.out' });
+      }
+    });
+    btn.addEventListener('mouseleave', () => {
+      if (window.gsap) gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  // ---------- Hero "aura" canvas ----------
+  const canvas = document.getElementById('aura-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, targetX, targetY, blobX, blobY;
+
+  function resize() {
+    w = canvas.width = canvas.offsetWidth;
+    h = canvas.height = canvas.offsetHeight;
+    if (blobX === undefined) { blobX = w * 0.72; blobY = h * 0.4; }
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  targetX = w * 0.72; targetY = h * 0.4;
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    if (e.clientY < rect.bottom) {
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+    }
+  });
+
+  let t = 0;
+  function drawAura() {
+    t += 0.006;
+    blobX += (targetX - blobX) * 0.02;
+    blobY += (targetY - blobY) * 0.02;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const wobbleX = Math.sin(t) * 40;
+    const wobbleY = Math.cos(t * 0.8) * 30;
+
+    const g1 = ctx.createRadialGradient(
+      blobX + wobbleX, blobY + wobbleY, 0,
+      blobX + wobbleX, blobY + wobbleY, Math.max(w, h) * 0.38
+    );
+    g1.addColorStop(0, 'rgba(180,145,91,0.55)');
+    g1.addColorStop(1, 'rgba(180,145,91,0)');
+    ctx.fillStyle = g1;
+    ctx.fillRect(0, 0, w, h);
+
+    const g2 = ctx.createRadialGradient(
+      blobX - wobbleX * 1.4, blobY - wobbleY * 1.4, 0,
+      blobX - wobbleX * 1.4, blobY - wobbleY * 1.4, Math.max(w, h) * 0.3
+    );
+    g2.addColorStop(0, 'rgba(75,63,114,0.55)');
+    g2.addColorStop(1, 'rgba(75,63,114,0)');
+    ctx.fillStyle = g2;
+    ctx.fillRect(0, 0, w, h);
+
+    requestAnimationFrame(drawAura);
+  }
+  drawAura();
+
+  // ---------- Hero headline subtle scale on scroll (single orchestrated moment) ----------
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('#topo h1, #topo p', {
+      y: -40,
+      opacity: 0.4,
+      scrollTrigger: {
+        trigger: '#topo',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+  }
+</script>
+
+</body>
+</html>
