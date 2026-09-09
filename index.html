@@ -146,6 +146,7 @@
     <nav class="hidden md:flex items-center gap-10 text-sm text-paper/80">
       <a href="#manifesto" class="nav-link" data-cursor-active>Manifesto</a>
       <a href="#servicos" class="nav-link" data-cursor-active>Serviços</a>
+      <a href="#metodo" class="nav-link" data-cursor-active>Metodologia</a>
       <a href="#trabalho" class="nav-link" data-cursor-active>Trabalho</a>
       <a href="#contato" class="nav-link text-paper" data-cursor-active>Contato</a>
     </nav>
@@ -512,13 +513,13 @@
             </div>
             <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
               <label for="empresa" class="block text-xs text-paper/50 mb-2">Empresa</label>
-              <input id="empresa" type="text" class="w-full text-paper placeholder:text-paper/30" placeholder="Nome do seu negócio">
+              <input id="empresa" type="text" required class="w-full text-paper placeholder:text-paper/30" placeholder="Nome do seu negócio">
             </div>
           </div>
 
           <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
             <label for="endereco" class="block text-xs text-paper/50 mb-2">Endereço completo</label>
-            <input id="endereco" type="text" autocomplete="street-address" class="w-full text-paper placeholder:text-paper/30" placeholder="Rua, número, bairro, cidade - UF">
+            <input id="endereco" type="text" required autocomplete="street-address" class="w-full text-paper placeholder:text-paper/30" placeholder="Rua, número, bairro, cidade - UF">
           </div>
 
           <div class="grid sm:grid-cols-2 gap-8">
@@ -527,19 +528,26 @@
               <input id="whatsapp" type="tel" inputmode="numeric" required class="w-full text-paper placeholder:text-paper/30" placeholder="+55 (11) 90000-0000">
             </div>
             <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
-              <label for="website" class="block text-xs text-paper/50 mb-2">Website</label>
-              <input id="website" type="url" class="w-full text-paper placeholder:text-paper/30" placeholder="https://seusite.com">
+              <label for="email" class="block text-xs text-paper/50 mb-2">E-mail</label>
+              <input id="email" type="email" required class="w-full text-paper placeholder:text-paper/30" placeholder="voce@empresa.com">
             </div>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-8">
             <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
-              <label for="instagram" class="block text-xs text-paper/50 mb-2">Instagram</label>
-              <input id="instagram" type="url" class="w-full text-paper placeholder:text-paper/30" placeholder="https://instagram.com/seuperfil">
+              <label for="website" class="block text-xs text-paper/50 mb-2">Website</label>
+              <input id="website" type="url" required class="w-full text-paper placeholder:text-paper/30" placeholder="https://seusite.com">
             </div>
             <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
-              <label for="tiktok" class="block text-xs text-paper/50 mb-2">TikTok</label>
-              <input id="tiktok" type="url" class="w-full text-paper placeholder:text-paper/30" placeholder="https://tiktok.com/@seuperfil">
+              <label for="instagram" class="block text-xs text-paper/50 mb-2">Instagram <span class="text-paper/30">(opcional)</span></label>
+              <input id="instagram" type="text" class="w-full text-paper placeholder:text-paper/30" placeholder="https://instagram.com/seuperfil">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-8">
+            <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
+              <label for="tiktok" class="block text-xs text-paper/50 mb-2">TikTok <span class="text-paper/30">(opcional)</span></label>
+              <input id="tiktok" type="text" class="w-full text-paper placeholder:text-paper/30" placeholder="https://tiktok.com/@seuperfil">
             </div>
           </div>
 
@@ -555,7 +563,7 @@
 
           <div class="border-b border-paper/20 pb-3 focus-within:border-paper transition-colors">
             <label for="mensagem" class="block text-xs text-paper/50 mb-2">Mensagem</label>
-            <textarea id="mensagem" rows="3" class="w-full text-paper placeholder:text-paper/30 resize-none" placeholder="Conte um pouco sobre o momento da sua marca"></textarea>
+            <textarea id="mensagem" rows="3" required class="w-full text-paper placeholder:text-paper/30 resize-none" placeholder="Conte um pouco sobre o momento da sua marca"></textarea>
           </div>
 
           <button type="submit" class="magnetic inline-flex items-center rounded-full bg-paper text-ink px-8 py-4 text-sm font-medium" data-cursor-active>
@@ -575,6 +583,7 @@
     <nav class="flex flex-wrap gap-x-8 gap-y-2 text-sm text-ink/50">
       <a href="#manifesto" class="hover:text-ink transition-colors" data-cursor-active>Manifesto</a>
       <a href="#servicos" class="hover:text-ink transition-colors" data-cursor-active>Serviços</a>
+      <a href="#metodo" class="hover:text-ink transition-colors" data-cursor-active>Metodologia</a>
       <a href="#trabalho" class="hover:text-ink transition-colors" data-cursor-active>Trabalho</a>
       <a href="#contato" class="hover:text-ink transition-colors" data-cursor-active>Contato</a>
     </nav>
@@ -651,13 +660,21 @@
     const input = document.getElementById('whatsapp');
     if (!input) return;
     input.addEventListener('input', () => {
-      let digits = input.value.replace(/\D/g, '').slice(0, 11);
+      // Extrai todos os dígitos do valor atual (que já inclui o prefixo "+55" fixo).
+      let digits = input.value.replace(/\D/g, '');
+      // Remove apenas os 2 dígitos que pertencem ao prefixo "+55" que nós mesmos inserimos,
+      // para não recontá-los como se fossem parte do número digitado pelo usuário.
+      if (digits.startsWith('55')) digits = digits.slice(2);
+      digits = digits.slice(0, 11);
+
       let out = '+55';
       if (digits.length > 0) out += ' (' + digits.slice(0, 2);
       if (digits.length >= 2) out += ')';
       if (digits.length > 2) out += ' ' + digits.slice(2, 7);
       if (digits.length > 7) out += '-' + digits.slice(7, 11);
+
       input.value = out;
+      input.setSelectionRange(input.value.length, input.value.length);
     });
   })();
 
@@ -675,6 +692,7 @@
         `Empresa: ${val('empresa')}`,
         `Endereço: ${val('endereco')}`,
         `WhatsApp: ${val('whatsapp')}`,
+        `E-mail: ${val('email')}`,
         `Website: ${val('website')}`,
         `Instagram: ${val('instagram')}`,
         `TikTok: ${val('tiktok')}`,
