@@ -104,9 +104,29 @@
   ::-webkit-scrollbar-track { background: #121214; }
   ::-webkit-scrollbar-thumb { background: #2C2C31; border-radius: 999px; }
 
+  /* ---------- Método Auramotion ---------- */
+  .rail-pulse {
+    position: absolute; top: 50%; left: 0; transform: translateY(-50%);
+    width: 64px; height: 2px; border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(180,145,91,0.9), transparent);
+    animation: railPulse 5.5s ease-in-out infinite;
+  }
+  @keyframes railPulse {
+    0%   { left: -8%; opacity: 0; }
+    12%  { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+  .metodo-dot.is-active { background: #B4915B; box-shadow: 0 0 0 4px rgba(180,145,91,0.18); }
+  .metodo-dot.is-done { background: #B4915B; }
+  .metodo-item[data-active="true"] .metodo-chevron { transform: rotate(45deg); color: #B4915B; }
+  .metodo-item[data-active="true"] h3 { color: #B4915B; }
+  .metodo-trigger { cursor: pointer; }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
     * { scroll-behavior: auto; }
+    .rail-pulse { animation: none; opacity: 0; }
   }
 </style>
 </head>
@@ -189,7 +209,143 @@
   </div>
 </section>
 
-<!-- ============ SERVIÇOS ============ -->
+<!-- ============ MÉTODO ============ -->
+<section id="metodo" class="bg-ink py-28 md:py-36 relative overflow-hidden">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+
+    <div class="max-w-2xl mb-20 reveal">
+      <p class="text-brass/90 text-sm tracking-wide mb-4">Como trabalhamos</p>
+      <h2 class="font-display text-4xl md:text-5xl tracking-tight">O Método Auramotion</h2>
+      <p class="mt-6 text-paper/60 text-lg leading-relaxed">
+        Uma única disciplina estratégica em 4 passos. Sem reuniões desnecessárias, sem
+        burocracia e com total previsibilidade.
+      </p>
+    </div>
+
+    <!-- Rail esquemático (desktop) -->
+    <div class="hidden md:block relative mb-20 reveal" id="metodo-rail">
+      <div class="absolute left-0 right-0 top-[10px] h-px bg-inkline overflow-hidden">
+        <span class="rail-pulse"></span>
+      </div>
+      <div class="absolute left-0 top-[10px] h-px bg-gradient-to-r from-brass to-plum transition-[width] duration-700 ease-out" id="metodo-fill" style="width:25%;"></div>
+      <div class="grid grid-cols-4 relative">
+        <button type="button" class="metodo-node group flex flex-col items-start text-left pr-6" data-step="0" data-cursor-active>
+          <span class="metodo-dot block w-[9px] h-[9px] rounded-full bg-brass ring-4 ring-ink mb-5 transition-all duration-500"></span>
+          <span class="text-xs text-paper/40 font-display tracking-wide">01</span>
+          <span class="metodo-node-label mt-1 text-sm md:text-base text-paper transition-colors">Imersão &amp; Direção</span>
+        </button>
+        <button type="button" class="metodo-node group flex flex-col items-start text-left pr-6" data-step="1" data-cursor-active>
+          <span class="metodo-dot block w-[9px] h-[9px] rounded-full bg-inkline ring-4 ring-ink mb-5 transition-all duration-500"></span>
+          <span class="text-xs text-paper/40 font-display tracking-wide">02</span>
+          <span class="metodo-node-label mt-1 text-sm md:text-base text-paper/60 group-hover:text-paper/80 transition-colors">Sistema &amp; Universo de Marca</span>
+        </button>
+        <button type="button" class="metodo-node group flex flex-col items-start text-left pr-6" data-step="2" data-cursor-active>
+          <span class="metodo-dot block w-[9px] h-[9px] rounded-full bg-inkline ring-4 ring-ink mb-5 transition-all duration-500"></span>
+          <span class="text-xs text-paper/40 font-display tracking-wide">03</span>
+          <span class="metodo-node-label mt-1 text-sm md:text-base text-paper/60 group-hover:text-paper/80 transition-colors">Aplicação em Ponto de Contato</span>
+        </button>
+        <button type="button" class="metodo-node group flex flex-col items-start text-left pr-4" data-step="3" data-cursor-active>
+          <span class="metodo-dot block w-[9px] h-[9px] rounded-full bg-inkline ring-4 ring-ink mb-5 transition-all duration-500"></span>
+          <span class="text-xs text-paper/40 font-display tracking-wide">04</span>
+          <span class="metodo-node-label mt-1 text-sm md:text-base text-paper/60 group-hover:text-paper/80 transition-colors">Autonomia &amp; Entrega Técnica</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="border-t border-inkline reveal" id="metodo-accordion">
+
+      <div class="metodo-item border-b border-inkline" data-step="0">
+        <button type="button" class="metodo-trigger w-full flex items-center justify-between gap-6 py-8 text-left" data-cursor-active>
+          <div class="flex items-baseline gap-4 md:gap-6">
+            <span class="font-display text-sm text-brass/80 w-6 shrink-0">01</span>
+            <h3 class="font-display text-xl md:text-3xl text-paper">Imersão &amp; Direção</h3>
+          </div>
+          <span class="metodo-chevron text-paper/40 text-2xl leading-none transition-transform duration-500 shrink-0">+</span>
+        </button>
+        <div class="metodo-panel overflow-hidden transition-all duration-500 ease-out" style="max-height:0px;">
+          <div class="pb-10 md:pl-[3.75rem] grid md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">O que fazemos</p>
+              <p class="text-paper/60 leading-relaxed">Mapeamos o negócio, analisamos a concorrência e realizamos um alinhamento estratégico assíncrono para definir objetivos claros e a direção criativa do projeto.</p>
+            </div>
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">Entregável</p>
+              <p class="text-paper/60 leading-relaxed">Moodboard aprovado, diagnóstico de posicionamento e cronograma do projeto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metodo-item border-b border-inkline" data-step="1">
+        <button type="button" class="metodo-trigger w-full flex items-center justify-between gap-6 py-8 text-left" data-cursor-active>
+          <div class="flex items-baseline gap-4 md:gap-6">
+            <span class="font-display text-sm text-brass/80 w-6 shrink-0">02</span>
+            <h3 class="font-display text-xl md:text-3xl text-paper">Sistema &amp; Universo de Marca</h3>
+          </div>
+          <span class="metodo-chevron text-paper/40 text-2xl leading-none transition-transform duration-500 shrink-0">+</span>
+        </button>
+        <div class="metodo-panel overflow-hidden transition-all duration-500 ease-out" style="max-height:0px;">
+          <div class="pb-10 md:pl-[3.75rem] grid md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">O que fazemos</p>
+              <p class="text-paper/60 leading-relaxed">Traduzimos a estratégia em ativos de valor — seja construindo o posicionamento (narrativa e tom de voz), o sistema visual (logo, cores e tipografia) ou a linha conceitual de uma campanha.</p>
+            </div>
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">Entregável</p>
+              <p class="text-paper/60 leading-relaxed">Apresentação do Sistema de Marca e Conceito Criativo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metodo-item border-b border-inkline" data-step="2">
+        <button type="button" class="metodo-trigger w-full flex items-center justify-between gap-6 py-8 text-left" data-cursor-active>
+          <div class="flex items-baseline gap-4 md:gap-6">
+            <span class="font-display text-sm text-brass/80 w-6 shrink-0">03</span>
+            <h3 class="font-display text-xl md:text-3xl text-paper">Aplicação em Ponto de Contato</h3>
+          </div>
+          <span class="metodo-chevron text-paper/40 text-2xl leading-none transition-transform duration-500 shrink-0">+</span>
+        </button>
+        <div class="metodo-panel overflow-hidden transition-all duration-500 ease-out" style="max-height:0px;">
+          <div class="pb-10 md:pl-[3.75rem] grid md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">O que fazemos</p>
+              <p class="text-paper/60 leading-relaxed">Testamos e aplicamos a marca em cenários reais do dia a dia do seu negócio: embalagens, sinalização, mídias digitais, apresentações comerciais ou materiais impressos.</p>
+            </div>
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">Entregável</p>
+              <p class="text-paper/60 leading-relaxed">Mockups de validação prática e layout de peças técnicas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="metodo-item border-b border-inkline" data-step="3">
+        <button type="button" class="metodo-trigger w-full flex items-center justify-between gap-6 py-8 text-left" data-cursor-active>
+          <div class="flex items-baseline gap-4 md:gap-6">
+            <span class="font-display text-sm text-brass/80 w-6 shrink-0">04</span>
+            <h3 class="font-display text-xl md:text-3xl text-paper">Autonomia &amp; Entrega Técnica</h3>
+          </div>
+          <span class="metodo-chevron text-paper/40 text-2xl leading-none transition-transform duration-500 shrink-0">+</span>
+        </button>
+        <div class="metodo-panel overflow-hidden transition-all duration-500 ease-out" style="max-height:0px;">
+          <div class="pb-10 md:pl-[3.75rem] grid md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">O que fazemos</p>
+              <p class="text-paper/60 leading-relaxed">Finalizamos e organizamos todos os arquivos com rigor técnico em uma central na nuvem, fornecendo manuais práticos para que seu time ou fornecedores executem a marca sem perder a qualidade.</p>
+            </div>
+            <div>
+              <p class="text-xs text-brass/70 tracking-wide mb-2">Entregável</p>
+              <p class="text-paper/60 leading-relaxed">Brand Guidelines interativo + Central de Arquivos Prontos para Uso.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 <section id="servicos" class="bg-ink py-28 md:py-36">
   <div class="max-w-[1400px] mx-auto px-6 md:px-10">
     <div class="flex items-end justify-between mb-16 reveal">
@@ -231,11 +387,15 @@
       <div class="md:col-span-7 order-1 md:order-2 reveal">
         <p class="text-brassdim text-sm tracking-wide mb-6">Quem somos</p>
         <h2 class="font-display text-3xl md:text-4xl tracking-tight leading-tight mb-8">
-          Uma agência desenvolvida para marcas que se recusam a parecer comuns.
+          Uma agência que fala tanto com o pequeno comércio quanto com o gestor de marketing.
         </h2>
         <div class="space-y-5 text-ink/70 leading-relaxed max-w-xl">
-          <p>A Auramotion nasceu para servir empresas e empreendedores ambiciosos que entendem que design não é custo, mas ativo financeiro.</p>
-          <p>Unimos o rigor estratégico de consultorias globais à agilidade operacional necessária para posicionar novos negócios com presença, autoridade e alto valor percebido desde o primeiro dia..</p>
+          <p>A Auramotion nasceu para ocupar um espaço pouco explorado: o de uma agência com
+          padrão estético de consultoria global, mas acessível a quem está começando um
+          negócio local.</p>
+          <p>Cada projeto recebe o mesmo processo — pesquisa, posicionamento, identidade e
+          aplicação — adaptado à escala e à ambição de quem contrata. O resultado é sempre o
+          mesmo: uma marca com presença, coerência e valor percebido.</p>
         </div>
       </div>
     </div>
@@ -393,6 +553,59 @@
       siteHeader.classList.remove('header-scrolled');
     }
   });
+
+  // ---------- Método Auramotion: accordion + rail ----------
+  (function () {
+    const items = Array.from(document.querySelectorAll('.metodo-item'));
+    const nodes = Array.from(document.querySelectorAll('.metodo-node'));
+    const fill = document.getElementById('metodo-fill');
+    if (!items.length) return;
+
+    function setActiveStep(index) {
+      items.forEach((item, i) => {
+        const panel = item.querySelector('.metodo-panel');
+        const isActive = i === index;
+        item.setAttribute('data-active', isActive ? 'true' : 'false');
+        if (isActive) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        } else {
+          panel.style.maxHeight = '0px';
+        }
+      });
+
+      nodes.forEach((node, i) => {
+        const dot = node.querySelector('.metodo-dot');
+        const label = node.querySelector('.metodo-node-label');
+        dot.classList.remove('is-active', 'is-done');
+        if (i < index) dot.classList.add('is-done');
+        if (i === index) dot.classList.add('is-active');
+        if (label) {
+          label.classList.toggle('text-paper', i <= index);
+          label.classList.toggle('text-paper/60', i > index);
+        }
+      });
+
+      if (fill) fill.style.width = ((index + 1) / items.length) * 100 + '%';
+    }
+
+    items.forEach((item, i) => {
+      const trigger = item.querySelector('.metodo-trigger');
+      trigger.addEventListener('click', () => setActiveStep(i));
+    });
+    nodes.forEach((node, i) => {
+      node.addEventListener('click', () => setActiveStep(i));
+    });
+
+    // Keep open panel's height correct if the window is resized
+    window.addEventListener('resize', () => {
+      const activeItem = items.find((item) => item.getAttribute('data-active') === 'true');
+      if (activeItem) {
+        activeItem.querySelector('.metodo-panel').style.maxHeight = activeItem.querySelector('.metodo-panel').scrollHeight + 'px';
+      }
+    });
+
+    setActiveStep(0);
+  })();
 
   // ---------- Scroll reveal ----------
   const revealEls = document.querySelectorAll('.reveal');
