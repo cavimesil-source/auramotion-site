@@ -39,6 +39,13 @@
 
 <style>
   :root { --brass: #B4915B; }
+  #site-header { background: transparent; }
+  #site-header.header-scrolled {
+    background: rgba(18,18,20,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
   * { scroll-behavior: smooth; }
   html, body { background: #121214; }
   body { font-family: 'Manrope', sans-serif; cursor: default; }
@@ -109,7 +116,7 @@
 <div class="cursor-ring hidden md:block"></div>
 
 <!-- ============ NAV ============ -->
-<header class="fixed top-0 inset-x-0 z-50">
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-colors duration-500">
   <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-6 flex items-center justify-between">
     <a href="#topo" class="font-display text-xl tracking-tight text-paper" data-cursor-active>
       Aura<span class="text-brass">motion</span>
@@ -379,6 +386,16 @@
 </footer>
 
 <script>
+  // ---------- Header com fundo ao rolar ----------
+  const siteHeader = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      siteHeader.classList.add('header-scrolled');
+    } else {
+      siteHeader.classList.remove('header-scrolled');
+    }
+  });
+
   // ---------- Scroll reveal ----------
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
