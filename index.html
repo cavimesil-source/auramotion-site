@@ -37,7 +37,6 @@
 </script>
 
 <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
 <style>
   :root { --brass: #B4915B; }
@@ -162,25 +161,26 @@
   <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink pointer-events-none"></div>
 
   <div class="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-28 pb-20 w-full">
-    <div class="max-w-3xl">
-      <p class="text-brass/90 text-sm tracking-wide mb-8 reveal">Design, branding e estratégia de marca</p>
-      <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper reveal">
-        Transformamos identidade em valor.
-      </h1>
-      <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper/50 mt-1 reveal">
-        Criamos marcas que movem mercados.
-      </h1>
-      <p class="mt-8 text-lg text-paper/70 max-w-xl reveal">
-        Construímos identidades visuais e posicionamentos que dão presença, credibilidade e
-        resultado comercial para operações de pequeno a grande porte.
-      </p>
+    <p class="text-brass/90 text-sm tracking-wide mb-8">Design, branding e estratégia de marca</p>
 
-      <div class="mt-12 flex flex-wrap items-center gap-6 reveal">
-        <a href="#contato" class="magnetic group relative rounded-full bg-paper text-ink px-8 py-4 text-sm font-medium overflow-hidden" data-cursor-active>
-          <span class="relative z-10">Iniciar um projeto</span>
-        </a>
-        <a href="#trabalho" class="text-sm text-paper/70 hover:text-paper transition-colors" data-cursor-active>Ver trabalho realizado</a>
+    <div class="max-w-3xl">
+        <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper">
+          Transformamos identidade em valor.
+        </h1>
+        <h1 class="font-display font-medium text-[13vw] md:text-[5.2vw] leading-[1.02] tracking-tight text-paper/50 mt-1">
+          Criamos marcas que movem mercados.
+        </h1>
+        <p class="mt-8 text-lg text-paper/70 max-w-xl">
+          Construímos identidades visuais e posicionamentos que dão presença, credibilidade e
+          resultado comercial para operações de pequeno a grande porte.
+        </p>
       </div>
+
+    <div class="mt-12 flex flex-wrap items-center gap-6 reveal">
+      <a href="#contato" class="magnetic group relative rounded-full bg-paper text-ink px-8 py-4 text-sm font-medium overflow-hidden" data-cursor-active>
+        <span class="relative z-10">Iniciar um projeto</span>
+      </a>
+      <a href="#trabalho" class="text-sm text-paper/70 hover:text-paper transition-colors" data-cursor-active>Ver trabalho realizado</a>
     </div>
   </div>
 
@@ -820,21 +820,6 @@
     requestAnimationFrame(drawAura);
   }
   drawAura();
-
-  // ---------- Hero headline subtle scale on scroll (single orchestrated moment) ----------
-  if (window.gsap && window.ScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.to('#topo h1, #topo p', {
-      y: -40,
-      opacity: 0.4,
-      scrollTrigger: {
-        trigger: '#topo',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-  }
 </script>
 
 </body>
